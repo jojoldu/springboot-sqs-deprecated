@@ -1,8 +1,9 @@
 package com.jojoldu.aws.springbootsqs.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDate;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 3. 12.
@@ -10,9 +11,9 @@ import lombok.Setter;
  * Github : https://github.com/jojoldu
  */
 
-@Setter
 @Getter
-@NoArgsConstructor
-public class MessageDto {
-
+@AllArgsConstructor
+public class SqsMessage {
+    private String name;
+    private LocalDate executeDate;
 }

@@ -1,0 +1,10 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: accessKey
+      secretKey: secretKey
+    region:
+      static: 리전 코드
+
+sqs:
+  queue: sqs queue 이름
