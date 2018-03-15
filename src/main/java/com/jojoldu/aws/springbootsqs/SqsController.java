@@ -28,11 +28,11 @@ public class SqsController {
 
     @GetMapping("/send")
     public String send(){
-        messagingTemplate.convertAndSend("springboot-cloud-sqs", new SqsMessage("test", LocalDate.now()));
+        messagingTemplate.convertAndSend(sqsConfiguration.getQueue("basic"), new SqsMessage("test", LocalDate.now()));
         return "success";
     }
 
-    @SqsListener(value = "${sqs.queue}")
+    @SqsListener(value = "${sqs.queueNames.basic}")
     public void receive(String message, @Header("SenderId") String senderId) {
         log.info("senderId: {}, message: {}", senderId, message);
     }

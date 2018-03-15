@@ -9,7 +9,10 @@ import org.elasticmq.rest.sqs.SQSRestServer;
 import org.elasticmq.rest.sqs.SQSRestServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 3. 15.
@@ -25,25 +28,26 @@ public class SqsMockConfiguration {
     private SqsProperties sqsProperties;
 
     @Bean
-    @Primary //cloud-starter로 자동생성되는 amaznoSQS 보다 우선순위를 높이기 위해
-    @Profile("local")
-    @DependsOn("sqsRestServer") //sqsRestServer가 생성된 후, 생성
+    @Primary //cloud-starter의존성으로 인해 자동생성되는 amaznoSQS 보다 Mock의 우선순위를 높이기 위해
+    @DependsOn("sqsRestServer") //sqsRestServer가 생성된 후, amazonSQS 생성
     public AmazonSQSAsync amazonSQS() {
         AmazonSQSAsync sqsAsync = createMockSqsAsync();
-        sqsAsync.createQueue("springboot-cloud-sqs");
+        sqsProperties.getQueueNames().values()
+                .forEach(sqsAsync::createQueue);
         return sqsAsync;
     }
 
     private AmazonSQSAsync createMockSqsAsync() {
         AmazonSQSAsyncClientBuilder sqsBuilder = AmazonSQSAsyncClientBuilder.standard();
         sqsBuilder.setCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("x", "x")));
-        sqsBuilder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:9324", ""));
+        sqsBuilder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsProperties.getEndPoint(), ""));
         return sqsBuilder.build();
     }
 
     @Bean
-    @Profile("local")
     public SQSRestServer sqsRestServer() {
-        return SQSRestServerBuilder.start();
+        return SQSRestServerBuilder
+                .withPort(sqsProperties.getPort())
+                .start();
     }
 }
