@@ -28,12 +28,8 @@ public class SqsController {
 
     @GetMapping("/send")
     public String send(){
-        send(new SqsMessage("test", LocalDate.now()));
+        messagingTemplate.convertAndSend(QUEUE_NAME, new SqsMessage("test", LocalDate.now()));
         return "success";
-    }
-
-    private void send(SqsMessage message) {
-        messagingTemplate.convertAndSend(QUEUE_NAME, message);
     }
 
     @SqsListener(value = "${sqs.queue}")
