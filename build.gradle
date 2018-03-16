@@ -38,6 +38,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.cloud:spring-cloud-starter-aws-messaging')
 	compile('org.springframework.cloud:spring-cloud-aws-autoconfigure')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    compile('com.h2database:h2')
 
 	// ElasticMQ (for Mocking SQS)
 	compile group: 'org.elasticmq', name: 'elasticmq-core_2.12', version: '0.13.8'

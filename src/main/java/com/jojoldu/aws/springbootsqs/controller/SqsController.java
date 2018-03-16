@@ -1,4 +1,4 @@
-package com.jojoldu.aws.springbootsqs;
+package com.jojoldu.aws.springbootsqs.controller;
 
 import com.jojoldu.aws.springbootsqs.config.SqsProperties;
 import com.jojoldu.aws.springbootsqs.dto.SqsMessage;

@@ -1,6 +1,7 @@
 package com.jojoldu.aws.springbootsqs;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
@@ -19,11 +20,14 @@ public class Application {
 				.run(args);
 	}
 
-
-
 	@Bean
 	public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSqs) {
 		return new QueueMessagingTemplate(amazonSqs);
+	}
+
+	@Bean
+	public ObjectMapper objectMapper(){
+		return new ObjectMapper();
 	}
 
 }
