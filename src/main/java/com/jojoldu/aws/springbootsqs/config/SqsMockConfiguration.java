@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Primary;
  */
 
 @Configuration
-@ConditionalOnExpression("${sqs.mock.enabled}")
+@ConditionalOnExpression("${sqs.mock.enabled}") // sqs.mock.enabled=true 일때만 활성화
 public class SqsMockConfiguration {
 
     @Autowired
@@ -30,7 +30,7 @@ public class SqsMockConfiguration {
     @Bean
     @Primary //cloud-starter의존성으로 인해 자동생성되는 amaznoSQS 보다 Mock의 우선순위를 높이기 위해
     @DependsOn("sqsRestServer") //sqsRestServer가 생성된 후, amazonSQS 생성
-    public AmazonSQSAsync amazonSQS() {
+    public AmazonSQSAsync amazonSqs() {
         AmazonSQSAsync sqsAsync = createMockSqsAsync();
         sqsProperties.getQueueNames().values()
                 .forEach(sqsAsync::createQueue);
@@ -47,6 +47,7 @@ public class SqsMockConfiguration {
     @Bean
     public SQSRestServer sqsRestServer() {
         return SQSRestServerBuilder
+                .withInterface(sqsProperties.getHost())
                 .withPort(sqsProperties.getPort())
                 .start();
     }

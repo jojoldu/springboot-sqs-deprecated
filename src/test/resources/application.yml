@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: local
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+sqs:
+  queueNames: {
+    "basic": "springboot-cloud-sqs",
+    "basicDlq": "springboot-cloud-sqs-dlq",
+    "point": "point",
+    "pointDlq": "point-dlq"
+  }
+  mock:
+    enabled: true
+  host: localhost
+  port: 9000

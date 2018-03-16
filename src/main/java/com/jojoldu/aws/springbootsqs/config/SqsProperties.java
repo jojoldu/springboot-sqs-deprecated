@@ -23,14 +23,19 @@ import java.util.Map;
 public class SqsProperties {
 
     private Map<String, String> queueNames;
+    private String host;
     private Integer port;
 
     public String getEndPoint() {
-        return String.format("http://localhost:%s", port);
+        return String.format("http://%s:%s", host, port);
+    }
+
+    public String getHost() {
+        return StringUtils.isEmpty(host)? "localhost" : host;
     }
 
     public Integer getPort() {
-        return StringUtils.isEmpty(port)? 9324: port;
+        return port == null? 9324: port;
     }
 
     public String getQueue(String key) {
