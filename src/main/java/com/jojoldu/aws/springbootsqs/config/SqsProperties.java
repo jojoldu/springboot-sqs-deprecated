@@ -2,12 +2,9 @@ package com.jojoldu.aws.springbootsqs.config;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
-
-import java.util.Map;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 3. 15.
@@ -18,16 +15,14 @@ import java.util.Map;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("sqs")
-@ConditionalOnExpression("${sqs.mock.enabled}")
+@ConfigurationProperties("mock.sqs")
 public class SqsProperties {
 
-    private Map<String, String> queueNames;
     private String host;
     private Integer port;
 
     public String getEndPoint() {
-        return String.format("http://%s:%s", host, port);
+        return String.format("http://%s:%s", getHost(), getPort());
     }
 
     public String getHost() {
@@ -36,9 +31,5 @@ public class SqsProperties {
 
     public Integer getPort() {
         return port == null? 9324: port;
-    }
-
-    public String getQueue(String key) {
-        return queueNames.get(key);
     }
 }

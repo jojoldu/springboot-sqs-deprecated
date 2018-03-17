@@ -1,6 +1,6 @@
 package com.jojoldu.aws.springbootsqs.controller;
 
-import com.jojoldu.aws.springbootsqs.config.SqsProperties;
+import com.jojoldu.aws.springbootsqs.config.SqsQueueNames;
 import com.jojoldu.aws.springbootsqs.dto.SqsMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +24,11 @@ import java.time.LocalDate;
 public class SqsController {
 
     private QueueMessagingTemplate messagingTemplate;
-    private SqsProperties sqsConfiguration;
+    private SqsQueueNames sqsQueueNames;
 
     @GetMapping("/send")
     public String send(){
-        messagingTemplate.convertAndSend(sqsConfiguration.getQueue("basic"), new SqsMessage("test", LocalDate.now()));
+        messagingTemplate.convertAndSend(sqsQueueNames.getQueue("basic"), new SqsMessage("test", LocalDate.now()));
         return "success";
     }
 

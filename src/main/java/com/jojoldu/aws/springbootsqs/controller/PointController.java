@@ -1,7 +1,7 @@
 package com.jojoldu.aws.springbootsqs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jojoldu.aws.springbootsqs.config.SqsProperties;
+import com.jojoldu.aws.springbootsqs.config.SqsQueueNames;
 import com.jojoldu.aws.springbootsqs.domain.PointRepository;
 import com.jojoldu.aws.springbootsqs.dto.PointDto;
 import lombok.AllArgsConstructor;
@@ -26,13 +26,13 @@ import java.io.IOException;
 @RestController
 public class PointController {
     private QueueMessagingTemplate messagingTemplate;
-    private SqsProperties sqsConfiguration;
+    private SqsQueueNames sqsQueueNames;
     private PointRepository pointRepository;
     private ObjectMapper objectMapper;
 
     @PostMapping("/point")
     public String save(@RequestBody PointDto requestDto){
-        messagingTemplate.convertAndSend(sqsConfiguration.getQueue("point"), requestDto);
+        messagingTemplate.convertAndSend(sqsQueueNames.getQueue("point"), requestDto);
         return "success";
     }
 

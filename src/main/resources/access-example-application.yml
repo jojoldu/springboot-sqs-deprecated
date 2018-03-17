@@ -7,4 +7,9 @@ cloud:
       static: 리전 코드
 
 sqs:
-  queue: sqs queue 이름
+  queueNames: { # example
+    "basic": "basic",
+    "basicDlq": "basic-dlq",
+    "point": "point",
+    "pointDlq": "point-dlq"
+  }

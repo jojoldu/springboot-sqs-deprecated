@@ -8,7 +8,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import org.elasticmq.rest.sqs.SQSRestServer;
 import org.elasticmq.rest.sqs.SQSRestServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -21,18 +21,21 @@ import org.springframework.context.annotation.Primary;
  */
 
 @Configuration
-@ConditionalOnExpression("${sqs.mock.enabled}") // sqs.mock.enabled=true 일때만 활성화
+@ConditionalOnMissingBean(name = "amazonSqs")
 public class SqsMockConfiguration {
 
     @Autowired
     private SqsProperties sqsProperties;
 
+    @Autowired
+    private SqsQueueNames sqsQueueNames;
+
     @Bean
-    @Primary //cloud-starter의존성으로 인해 자동생성되는 amaznoSQS 보다 Mock의 우선순위를 높이기 위해
-    @DependsOn("sqsRestServer") //sqsRestServer가 생성된 후, amazonSQS 생성
+    @Primary
+    @DependsOn("sqsRestServer")
     public AmazonSQSAsync amazonSqs() {
         AmazonSQSAsync sqsAsync = createMockSqsAsync();
-        sqsProperties.getQueueNames().values()
+        sqsQueueNames.getQueueNames().values()
                 .forEach(sqsAsync::createQueue);
         return sqsAsync;
     }
