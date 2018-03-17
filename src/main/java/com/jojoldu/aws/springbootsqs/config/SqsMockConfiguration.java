@@ -8,7 +8,6 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.jojoldu.aws.springbootsqs.annotation.ConditionalOnMockSqs;
 import org.elasticmq.rest.sqs.SQSRestServer;
 import org.elasticmq.rest.sqs.SQSRestServerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -24,11 +23,13 @@ import org.springframework.context.annotation.Primary;
 @ConditionalOnMockSqs
 public class SqsMockConfiguration {
 
-    @Autowired
     private SqsProperties sqsProperties;
-
-    @Autowired
     private SqsQueueNames sqsQueueNames;
+
+    public SqsMockConfiguration(SqsProperties sqsProperties, SqsQueueNames sqsQueueNames) {
+        this.sqsProperties = sqsProperties;
+        this.sqsQueueNames = sqsQueueNames;
+    }
 
     @Bean
     @Primary

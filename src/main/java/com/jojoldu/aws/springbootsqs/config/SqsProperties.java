@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("mock.sqs")
+@ConfigurationProperties("sqs.mock")
 public class SqsProperties {
 
     private String host;

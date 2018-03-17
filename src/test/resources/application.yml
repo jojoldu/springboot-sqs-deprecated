@@ -8,6 +8,10 @@ cloud:
       static: ap-northeast-2
 
 sqs:
+  mock:
+    enabled: true
+    host: localhost
+    port: 9000
   queueNames: {
     "basic": "basic",
     "basicDlq": "basic-dlq",
