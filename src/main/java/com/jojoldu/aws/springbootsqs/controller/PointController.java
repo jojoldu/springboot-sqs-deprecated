@@ -1,7 +1,7 @@
 package com.jojoldu.aws.springbootsqs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jojoldu.aws.springbootsqs.config.SqsQueueNames;
+import com.github.jojoldu.sqs.config.SqsQueueNames;
 import com.jojoldu.aws.springbootsqs.domain.PointRepository;
 import com.jojoldu.aws.springbootsqs.dto.PointDto;
 import lombok.AllArgsConstructor;

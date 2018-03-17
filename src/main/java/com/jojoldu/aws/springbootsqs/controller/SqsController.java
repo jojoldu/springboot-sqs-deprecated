@@ -1,6 +1,6 @@
 package com.jojoldu.aws.springbootsqs.controller;
 
-import com.jojoldu.aws.springbootsqs.config.SqsQueueNames;
+import com.github.jojoldu.sqs.config.SqsQueueNames;
 import com.jojoldu.aws.springbootsqs.dto.SqsMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
