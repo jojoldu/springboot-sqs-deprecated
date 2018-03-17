@@ -5,10 +5,10 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
+import com.jojoldu.aws.springbootsqs.annotation.ConditionalOnMockSqs;
 import org.elasticmq.rest.sqs.SQSRestServer;
 import org.elasticmq.rest.sqs.SQSRestServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Primary;
  */
 
 @Configuration
-@ConditionalOnMissingBean(name = "amazonSqs")
+@ConditionalOnMockSqs
 public class SqsMockConfiguration {
 
     @Autowired
